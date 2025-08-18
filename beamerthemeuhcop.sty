@@ -1,0 +1,152 @@
+%----------------------------------------
+% OUTER THEME CONFIGURATION
+%----------------------------------------
+\useoutertheme{infolines}
+\setcounter{tocdepth}{1} % Set navigation depth: 1 = sections only
+\useoutertheme[width=.05\paperwidth]{sidebar}
+\setbeamertemplate{navigation symbols}{}
+\setlength{\beamer@headheight}{0.01\paperheight}
+
+% Sidebar appearance
+\setbeamertemplate{sidebar left}{%
+  \vskip20pt
+  \insertverticalnavigation{\beamer@sidebarwidth}%
+}
+
+%----------------------------------------
+% COLOR DEFINITIONS (UH and Houston Branding)
+%----------------------------------------
+\definecolor{houstonred}{RGB}{200,16,46}
+\definecolor{houstonbrick}{RGB}{150,12,34}
+\definecolor{houstonblue}{RGB}{65,143,22}     % Houston Oilers Blue
+\definecolor{houstongold}{RGB}{246,190,0}
+\definecolor{houstoncream}{RGB}{255,249,217}
+
+\usecolortheme[named=houstonred]{structure}
+\setbeamercolor{shorttitle in foot}{fg=houstonred}
+\setbeamercolor{frametitle in header}{fg=houstonred}
+
+%----------------------------------------
+% LENGTH DEFINITIONS
+%----------------------------------------
+\newlength{\sidebarwidth}
+\setlength{\sidebarwidth}{0.05\paperwidth}
+
+\newlength{\textmargin}
+\setlength{\textmargin}{10mm}
+\setbeamersize{text margin left=\textmargin, text margin right=\textmargin}
+
+\newlength{\titlehmargin}
+\setlength{\titlehmargin}{5mm}
+
+\newlength{\titlevmargin}
+\setlength{\titlevmargin}{1mm}
+
+\newlength{\ruleheight}
+\setlength{\ruleheight}{0.1pt}
+
+% Total width for title/footer lines
+\newlength{\fullpagewidth}
+\setlength{\fullpagewidth}{\dimexpr\paperwidth - \sidebarwidth\relax}
+
+% Paragraph layout
+\setlength{\parskip}{0pt}
+\setlength{\parindent}{0pt}
+
+%----------------------------------------
+% LOGO SIZING (Maintain Aspect Ratios)
+%----------------------------------------
+\newlength{\houstonlogowidth}
+\setlength{\houstonlogowidth}{\dimexpr 10mm * 214 / 311 \relax}
+
+\newlength{\mathslogowidth}
+\setlength{\mathslogowidth}{\dimexpr 3mm * 347 / 105 \relax}
+
+
+%----------------------------------------
+% Define total page height and width
+%----------------------------------------
+\newlength{\usablewidth}
+\setlength{\usablewidth}{\dimexpr \paperwidth - \sidebarwidth - 2\textmargin - \houstonlogowidth \relax}
+
+\newlength{\headerheight}
+\setlength{\headerheight}{25mm} % as you've defined
+
+\newlength{\footerheight}
+\setlength{\footerheight}{25cm} % estimate or customize based on your footline
+
+\newlength{\usableheight}
+\setlength{\usableheight}{\dimexpr \paperheight - \headerheight - \footheight \relax}
+
+
+%----------------------------------------
+% TITLE SLIDE (Background + Info)
+%----------------------------------------
+\setbeamertemplate{title page}{
+  \begin{picture}(0,0)
+    \put(-1.95cm, \dimexpr -\paperheight*6/10 \relax){
+      \includegraphics[width=\paperwidth]{title-slide-background.jpg}
+    }
+    \put(-\textmargin +7mm, -140pt){
+      \begin{minipage}[b][4.5cm][t]{0.9\textwidth}
+        \raggedright
+        \color{white}
+        \usebeamerfont{title}
+        {\inserttitle\\[0.9cm]}
+        \usebeamerfont{subtitle}
+        {\insertauthor\\[0.1cm]}
+        {\insertinstitute\\[0.3cm]}
+        {\insertdate}
+      \end{minipage}
+    }
+  \end{picture}
+}
+
+%----------------------------------------
+% GENERAL FRAME TITLE HEADER
+%----------------------------------------
+\setbeamertemplate{frametitle}{%
+  \rlap{%
+    \begin{beamercolorbox}[sep=0.5\titlevmargin,left,wd=\dimexpr\fullpagewidth - 2\titlehmargin + 2\titlevmargin\relax]{frametitle}%
+      \begin{minipage}{\dimexpr\fullpagewidth - \houstonlogowidth - 3\titlehmargin - 0.1cm\relax}%
+        \strut{\large\color{houstonred}\insertframetitle}\strut\par
+      \end{minipage}%
+      \hspace{\titlehmargin}%
+      \begin{minipage}{\dimexpr\houstonlogowidth \relax}
+        \hfill \hspace*{2mm}
+        \includegraphics[width=\houstonlogowidth]{houston-logo.png}%
+      \end{minipage}%
+    \end{beamercolorbox}%
+  }%
+  \vspace{\dimexpr-\baselineskip+0.5ex\relax}%
+  \noindent\hspace*{\dimexpr -\titlehmargin\relax}%
+    \textcolor{gray}{%
+    \rule{\dimexpr\paperwidth - \houstonlogowidth - 4\titlehmargin\relax}{\ruleheight}
+  }
+}
+
+%----------------------------------------
+% GENERAL FOOTLINE
+%----------------------------------------
+\setbeamertemplate{footline}{%
+  \noindent\hspace*{\dimexpr\sidebarwidth + \titlehmargin\relax}%
+  \textcolor{gray}{%
+  \rule{\dimexpr\paperwidth - \houstonlogowidth - 4\titlehmargin\relax}{\ruleheight}
+  }\par%
+  \vspace{0.5\titlevmargin}%
+  \leavevmode%
+  \noindent\hspace*{\dimexpr\sidebarwidth + \titlehmargin - \titlevmargin\relax}%
+  \begin{beamercolorbox}[sep=\titlevmargin,wd=\dimexpr\paperwidth - \sidebarwidth - 2\titlehmargin + 2\titlevmargin\relax]{footline}%
+    \begin{minipage}{\dimexpr\mathslogowidth + 1pt\relax}%
+      \includegraphics[width=1.5\mathslogowidth]{pharmacy-logo.png}%
+    \end{minipage}%
+    \hfill%
+    {\usebeamercolor[fg]{shorttitle in foot}\usebeamerfont{title in head/foot}\insertshorttitle}%
+    \hfill%
+    {\usebeamercolor[fg]{date in head/foot}\usebeamerfont{date in head/foot}\insertshortdate{}}%
+    \hfill%
+    {\usebeamercolor[houstonred]{page number in head/foot}\usebeamerfont{page number in head/foot}\usebeamertemplate{page number in head/foot}}%
+  \end{beamercolorbox}
+  \vspace{0.5\titlevmargin}%
+}
+

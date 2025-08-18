@@ -1,0 +1,86 @@
+% JKM: adapted from Oxford Mathematical Institute
+% Use one of the two documentclass lines depending on aspect ratio needed
+% for 4x3 aspect ratio slides
+% \documentclass{beamer}
+% for 16x9 (modern wide screen) aspect ratio slides
+\documentclass[aspectratio=169]{beamer}
+\usetheme{uhcop}
+%----------------------------------------
+%          PACKAGES REQUIRED
+%----------------------------------------
+
+\usepackage{array}
+\usepackage{booktabs}
+\usepackage{tabularx}
+\usepackage{array}
+\usepackage{amsmath} 
+\usepackage{xcolor}
+\usepackage{ragged2e}
+\usepackage{lmodern}
+
+
+%----------------------------------------
+%          BIBLIOGRAPHY STYLE
+%----------------------------------------
+
+%\usepackage[backend=biber,style=authoryear]{biblatex}
+%\addbibresource{presentation_refs.bib} % your .bib file name here
+
+%\RequirePackage[super,comma,numbers, sort&compress]{natbib}
+\RequirePackage[authoryear,round,numbers,sort&compress]{natbib}
+\bibliographystyle{unsrtnat}   % or abbrv, unsrt, alpha, unsrtnat, plainnat, etc.
+\renewcommand{\bibnumfmt}[1]{[#1]}
+
+
+
+%----------------------------------------
+%          PERSONALIZE YOUR TALK 
+%----------------------------------------
+
+\title[My Talk]{Pharmacology of the PolC-type DNA polymerase III of the Human Gut Microbiome} 
+\author{Jacob K. McPherson}
+\institute{
+Department of Pharmacological and Pharmaceutical Sciences\\
+University of Houston
+}
+\date[\today]{\today} % [short]{long for title}
+
+%----------------------------------------
+%          CONSISTENT CHAPTER TITLES
+%----------------------------------------
+
+\newcommand{\chapterone}{%
+Functional and Metagenomic Evaluation of Ibezapolstat for Early Evaluation of Anti-Recurrence Effects in \textit{C. difficile} Infection
+}
+
+\newcommand{\chaptertwo}{%
+Efficacy, safety, pharmacokinetics, and microbiome changes of ibezapolstat in adults with \textit{C. difficile} infection: a phase 2a multicenter clinical trial
+}
+
+\newcommand{\chapterthree}{%
+The microbiome-restorative potential of ibezapolstat for the treatment of Clostridioides difficile infection...
+}
+
+\newcommand{\chapterfour}{%
+Globally circulating \textit{C. difficile} are devoid of mutations associated with PolC inhibitor resistance
+}
+
+\newcommand{\chapterfive}{%
+
+}
+
+%----------------------------------------
+%          INPUT SECTIONS OF CHAPTERS
+%----------------------------------------
+
+\begin{document}
+\begin{frame}[plain]\titlepage\end{frame}
+\section{Intro}
+\input{presentation_intro}
+\section{Ch.1}\input{presentation_ch1}
+\section{Ch.2}\input{presentation_ch2}
+\section{Ch.3}\input{presentation_ch3}
+\section{Conclusion}
+\input{presentation_conclusion}
+\input{presentation_refs_acknowl}
+\end{document}
