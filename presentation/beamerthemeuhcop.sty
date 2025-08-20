@@ -150,3 +150,141 @@
   \vspace{0.5\titlevmargin}%
 }
 
+% --- Objectives frame support -----------------------------------------------
+
+% 1) Requirements
+\RequirePackage{xcolor}   % \textcolor
+\RequirePackage{etoolbox} % \ifboolexpr, \ifdefempty
+\RequirePackage{pgfkeys}  % key–value interface
+
+% 2) Defaults (safe if user forgets to override)
+\providecommand{\ObjOneColor}{lightgray}
+\providecommand{\ObjTwoColor}{lightgray}
+\providecommand{\ObjThreeColor}{lightgray}
+
+\providecommand{\ChapOneColor}{lightgray}
+\providecommand{\ChapTwoColor}{lightgray}
+\providecommand{\ChapThreeColor}{lightgray}
+\providecommand{\ChapFourColor}{lightgray}
+\providecommand{\ChapFiveColor}{lightgray}
+
+% 3) Location of the frame file (override earlier in the preamble if desired)
+\providecommand{\ObjectivesFrameFile}{presentation/frame_objectives} % no .tex
+
+% 4) Minimal wrapper (3-arg) — keeps backward compatibility
+%    Usage: \ObjectivesFrame{Obj1}{Obj2}{Obj3}
+\providecommand{\ObjectivesFrame}[3]{%
+  \begingroup
+    \renewcommand{\ObjOneColor}{#1}%
+    \renewcommand{\ObjTwoColor}{#2}%
+    \renewcommand{\ObjThreeColor}{#3}%
+    \InputIfFileExists{\ObjectivesFrameFile}{}{%
+      \PackageWarning{beamerthemeuhcop}{File \ObjectivesFrameFile.tex not found}%
+    }%
+  \endgroup
+}
+
+% 4b) Extended wrapper (8-arg) — includes chapters 1–5
+%     Usage: \ObjectivesFrameWithChaps{Obj1}{Obj2}{Obj3}{Chap1}{Chap2}{Chap3}{Chap4}{Chap5}
+\newcommand{\ObjectivesFrameWithChaps}[8]{%
+  \begingroup
+    % Objective colors
+    \renewcommand{\ObjOneColor}{#1}%
+    \renewcommand{\ObjTwoColor}{#2}%
+    \renewcommand{\ObjThreeColor}{#3}%
+    % Chapter colors
+    \renewcommand{\ChapOneColor}{#4}%
+    \renewcommand{\ChapTwoColor}{#5}%
+    \renewcommand{\ChapThreeColor}{#6}%
+    \renewcommand{\ChapFourColor}{#7}%
+    \renewcommand{\ChapFiveColor}{#8}%
+    \InputIfFileExists{\ObjectivesFrameFile}{}{%
+      \PackageWarning{beamerthemeuhcop}{File \ObjectivesFrameFile.tex not found}%
+    }%
+  \endgroup
+}
+
+% 5) Convenience: highlight ONE objective by index (1/2/3); others -> lightgray
+%    Usage: \ObjectivesFrameHighlight{<1|2|3>}
+\newcommand{\ObjectivesFrameHighlight}[1]{%
+  \begingroup
+    \def\ObjA{lightgray}\def\ObjB{lightgray}\def\ObjC{lightgray}%
+    \def\idx{#1}%
+    \ifboolexpr{ test{\ifnumcomp{\idx}{=}{1}} }{\def\ObjA{black}}{}%
+    \ifboolexpr{ test{\ifnumcomp{\idx}{=}{2}} }{\def\ObjB{black}}{}%
+    \ifboolexpr{ test{\ifnumcomp{\idx}{=}{3}} }{\def\ObjC{black}}{}%
+    \renewcommand{\ObjOneColor}{\ObjA}%
+    \renewcommand{\ObjTwoColor}{\ObjB}%
+    \renewcommand{\ObjThreeColor}{\ObjC}%
+    \InputIfFileExists{\ObjectivesFrameFile}{}{%
+      \PackageWarning{beamerthemeuhcop}{File \ObjectivesFrameFile.tex not found}%
+    }%
+  \endgroup
+}
+
+% 5b) Convenience: highlight ONE chapter by index (1..5); others -> lightgray
+%     Usage: \ObjectivesFrameHighlightChap{<1..5>}
+\newcommand{\ObjectivesFrameHighlightChap}[1]{%
+  \begingroup
+    \def\COne{lightgray}\def\CTwo{lightgray}\def\CThree{lightgray}\def\CFour{lightgray}\def\CFive{lightgray}%
+    \def\idx{#1}%
+    \ifboolexpr{ test{\ifnumcomp{\idx}{=}{1}} }{\def\COne{black}}{}%
+    \ifboolexpr{ test{\ifnumcomp{\idx}{=}{2}} }{\def\CTwo{black}}{}%
+    \ifboolexpr{ test{\ifnumcomp{\idx}{=}{3}} }{\def\CThree{black}}{}%
+    \ifboolexpr{ test{\ifnumcomp{\idx}{=}{4}} }{\def\CFour{black}}{}%
+    \ifboolexpr{ test{\ifnumcomp{\idx}{=}{5}} }{\def\CFive{black}}{}%
+    \renewcommand{\ChapOneColor}{\COne}%
+    \renewcommand{\ChapTwoColor}{\CTwo}%
+    \renewcommand{\ChapThreeColor}{\CThree}%
+    \renewcommand{\ChapFourColor}{\CFour}%
+    \renewcommand{\ChapFiveColor}{\CFive}%
+    \InputIfFileExists{\ObjectivesFrameFile}{}{%
+      \PackageWarning{beamerthemeuhcop}{File \ObjectivesFrameFile.tex not found}%
+    }%
+  \endgroup
+}
+
+% 6) Key–value interface (objectives + chapters)
+%    Example:
+%    \ObjectivesFrameKV[
+%       ObjOne=black, ObjTwo=lightgray, ObjThree=lightgray,
+%       ChapTwo=black
+%    ]
+\pgfkeys{
+  /uhcop/.is family, /uhcop,
+  ObjOne/.estore  in=\uhcop@ObjOne,
+  ObjTwo/.estore  in=\uhcop@ObjTwo,
+  ObjThree/.estore in=\uhcop@ObjThree,
+  ChapOne/.estore in=\uhcop@ChapOne,
+  ChapTwo/.estore in=\uhcop@ChapTwo,
+  ChapThree/.estore in=\uhcop@ChapThree,
+  ChapFour/.estore in=\uhcop@ChapFour,
+  ChapFive/.estore in=\uhcop@ChapFive,
+}
+\newcommand{\ObjectivesFrameKV}[1][]{%
+  \begingroup
+    % defaults
+    \def\uhcop@ObjOne{lightgray}%
+    \def\uhcop@ObjTwo{lightgray}%
+    \def\uhcop@ObjThree{lightgray}%
+    \def\uhcop@ChapOne{lightgray}%
+    \def\uhcop@ChapTwo{lightgray}%
+    \def\uhcop@ChapThree{lightgray}%
+    \def\uhcop@ChapFour{lightgray}%
+    \def\uhcop@ChapFive{lightgray}%
+    % parse user keys
+    \pgfkeys{/uhcop, #1}%
+    % apply
+    \renewcommand{\ObjOneColor}{\uhcop@ObjOne}%
+    \renewcommand{\ObjTwoColor}{\uhcop@ObjTwo}%
+    \renewcommand{\ObjThreeColor}{\uhcop@ObjThree}%
+    \renewcommand{\ChapOneColor}{\uhcop@ChapOne}%
+    \renewcommand{\ChapTwoColor}{\uhcop@ChapTwo}%
+    \renewcommand{\ChapThreeColor}{\uhcop@ChapThree}%
+    \renewcommand{\ChapFourColor}{\uhcop@ChapFour}%
+    \renewcommand{\ChapFiveColor}{\uhcop@ChapFive}%
+    \InputIfFileExists{\ObjectivesFrameFile}{}{%
+      \PackageWarning{beamerthemeuhcop}{File \ObjectivesFrameFile.tex not found}%
+    }%
+  \endgroup
+}
