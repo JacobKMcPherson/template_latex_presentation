@@ -1,1 +1,1 @@
-Use this template and make edits in OverLeaf.com
+Use this template (create new repository) and make edits in OverLeaf.com
